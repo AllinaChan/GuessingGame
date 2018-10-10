@@ -5,12 +5,13 @@ public class GuessingGame {
     {
         int guess=0;
         int num=(int)(Math.random()*100+1);
+        int guessCounter=0;
         Scanner input = new Scanner (System.in);
         System.out.println("Hello user! What is your name?");
         String userName= input.nextLine();
         System.out.println("Hello "+ userName+ ", nice to meet you!");
-        System.out.println("I will be generating a random number 1-100 and you will have to guess it!");
-        System.out.println("What is your first guess?");
+        System.out.println("OKAY! "+ userName+ " I will be generating a random number 1-100 and you will have to guess it!");
+        System.out.println(userName+" what is your first guess?");
         guess= input.nextInt();
         while (guess!=num)
         {
@@ -24,7 +25,9 @@ public class GuessingGame {
                 System.out.println("The number is bigger than that~~");
                 guess=input.nextInt();
             }
+            guessCounter++;
         }
-        System.out.println("CONGRADULATIONS! YOU GOT IT! The number was: "+ num);
+        System.out.println("CONGRADULATIONS! YOU GOT IT! "+userName+ " The number was: "+ num);
+        System.out.println("That took you "+ guessCounter+" guesses");
     }
 }
