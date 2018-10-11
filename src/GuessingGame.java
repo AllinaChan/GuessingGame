@@ -1,33 +1,90 @@
 import java.util.Scanner;
 
 public class GuessingGame {
-    public static void main(String[] args)
-    {
-        int guess=0;
-        int num=(int)(Math.random()*100+1);
-        int guessCounter=0;
-        Scanner input = new Scanner (System.in);
+    public static void main(String[] args) {
+        int guess = 0;
+        int num = 0;
+        int guessCounter = 0;
+        Scanner input = new Scanner(System.in);
         System.out.println("Hello user! What is your name?");
-        String userName= input.nextLine();
-        System.out.println("Hello "+ userName+ ", nice to meet you!");
-        System.out.println("OKAY! "+ userName+ " I will be generating a random number 1-100 and you will have to guess it!");
-        System.out.println(userName+" what is your first guess?");
-        guess= input.nextInt();
-        while (guess!=num)
-        {
-         int guessNumDiff=guess-num;
-            if (guessNumDiff > 0) {
-                System.out.println("The number is smaller than that~~");
-                guess=input.nextInt();
+        String userName = input.nextLine();
+        System.out.println("Hello " + userName + ", nice to meet you!");
+        int gameChoice = 0;
+        System.out.println(userName + ", Which game do you want to play?");
+        System.out.println("Game 1 - I will generate a number and you will have to guess it");
+        System.out.println("Game 2 - You will give me a number 1-100 and I will guess it!");
+        System.out.println("Type '1' for game 1. Type '2' for game 2");
+        gameChoice=input.nextInt();
+
+        //OBJECTIVE 1 GAME
+        if (gameChoice == 1) {
+            System.out.println("OKAY! " + userName + " I will be generating a random number 1-x and you will have to guess it!");
+            System.out.println("Choose a difficulty:");
+            System.out.println("Type '1' for a random number 1-10");
+            System.out.println("Type '2' for a random number 1-100");
+            System.out.println("Type '3' for a random number 1-1000");
+            System.out.println("Type '4' for a random number 1-10000");
+            int difficulty = input.nextInt();
+            if (difficulty == 1) {
+                num = (int) (Math.random() * 10 + 1);
             }
-            if(guessNumDiff<0)
-            {
-                System.out.println("The number is bigger than that~~");
-                guess=input.nextInt();
+            if (difficulty == 2) {
+                num = (int) (Math.random() * 100 + 1);
             }
-            guessCounter++;
+            if (difficulty == 3) {
+                num = (int) (Math.random() * 1000 + 1);
+            }
+            if (difficulty == 4) {
+                num = (int) (Math.random() * 10000 + 1);
+            }
+            System.out.println(userName + " what is your first guess?");
+            guess = input.nextInt();
+            while (guess != num) {
+                int guessNumDiff = guess - num;
+                if (guessNumDiff > 0) {
+                    System.out.println("The number is smaller than that~~");
+                    guess = input.nextInt();
+                }
+                if (guessNumDiff < 0) {
+                    System.out.println("The number is bigger than that~~");
+                    guess = input.nextInt();
+                }
+                guessCounter++;
+            }
+            System.out.println("CONGRADULATIONS! YOU GOT IT! " + userName + " The number was: " + num);
+            System.out.println("That took you " + guessCounter + " guesses");
         }
-        System.out.println("CONGRADULATIONS! YOU GOT IT! "+userName+ " The number was: "+ num);
-        System.out.println("That took you "+ guessCounter+" guesses");
+
+        //OBJECTIVE 2 GAME
+        if(gameChoice==2)
+        {
+            int min=1;
+            int max=100;
+            guess=50;
+            String userAdvice="";
+            System.out.println("LET'S PLAY "+userName+"! Give me a number 1-100");
+            num=input.nextInt();
+            System.out.println("Okay! Is your number "+ guess+"? TYPE 'higher', 'lower' or 'correct'" );
+            userAdvice=input.nextLine();
+            userAdvice=userAdvice.toLowerCase();
+            while(guess!=num) {
+                if (userAdvice.equals("higher")) {
+                    min = guess;
+                    guess = (min + max) / 2;
+                    System.out.println("Is it: " + guess + "?");
+                    userAdvice = input.nextLine();
+                    userAdvice = userAdvice.toLowerCase();
+                }
+                if (userAdvice.equals("lower"))
+                {
+                    max = guess;
+                    guess = (min + max) / 2;
+                    System.out.println("Is it: " + guess + "?");
+                    userAdvice = input.nextLine();
+                    userAdvice = userAdvice.toLowerCase();
+                }
+            }
+            System.out.println("YEA! I GOT IT! That was fun "+userName+"!");
+        }
     }
 }
