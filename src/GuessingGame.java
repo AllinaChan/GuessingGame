@@ -1,6 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+//Allen Chen Period 9
 public class GuessingGame {
     public static void main(String[] args) {
         int difficulty=0;
