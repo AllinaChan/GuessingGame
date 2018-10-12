@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class GuessingGame {
     public static void main(String[] args) {
         int guess = 0;
-        int num = -1;//catching errors setting to -1
+        int num = 0;//catching errors setting to -1
         int guessCounter = 0;
         Scanner input = new Scanner(System.in);
         System.out.println("Hello user! What is your name?");
@@ -65,18 +65,31 @@ public class GuessingGame {
             guess=50;
             String userAdvice="";
             System.out.println("LET'S PLAY "+userName+"! Give me a number 1-100");
-            while (num !=0){
-            try {
+            //check in case user trolls and input a string
+            while (num ==0)
+            {
+            try
+            {
                 num = input.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println(e);
-                System.out.println("Please give me a number 1-100! >:( ");
+                continue;
             }
-        }
-        
+            catch (InputMismatchException e)
+            {
+                System.out.println("Please give me a number 1-100! >:( ");
+                input.nextLine();
+            }
+            }
             System.out.println("Okay! Is your number "+ guess+"? TYPE 'higher', 'lower' or 'correct'" );
             while(!userAdvice.equals("correct")) {
-                userAdvice=input.nextLine();
+                while(userAdvice.equals("")) {
+                    try {
+                        userAdvice = input.nextLine();
+                    } catch(InputMismatchException a) {
+                        System.out.println("That's not a valid advice >:(");
+                        input.nextLine();
+                    }
+                    }
+                }
                 userAdvice=userAdvice.toLowerCase();
                 if (userAdvice.equals("higher")) {
                     min = guess;
@@ -95,4 +108,5 @@ public class GuessingGame {
             System.out.println("Wow...It took me "+ guessCounter+" tries :(");
         }
     }
-}
+
+
