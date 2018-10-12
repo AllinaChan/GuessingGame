@@ -1,9 +1,10 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GuessingGame {
     public static void main(String[] args) {
         int guess = 0;
-        int num = 0;
+        int num = -1;//catching errors setting to -1
         int guessCounter = 0;
         Scanner input = new Scanner(System.in);
         System.out.println("Hello user! What is your name?");
@@ -58,33 +59,40 @@ public class GuessingGame {
         //OBJECTIVE 2 GAME
         if(gameChoice==2)
         {
+            guessCounter=0;
             int min=1;
             int max=100;
             guess=50;
             String userAdvice="";
             System.out.println("LET'S PLAY "+userName+"! Give me a number 1-100");
-            num=input.nextInt();
+            while (num !=0){
+            try {
+                num = input.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println(e);
+                System.out.println("Please give me a number 1-100! >:( ");
+            }
+        }
+        
             System.out.println("Okay! Is your number "+ guess+"? TYPE 'higher', 'lower' or 'correct'" );
-            userAdvice=input.nextLine();
-            userAdvice=userAdvice.toLowerCase();
-            while(guess!=num) {
+            while(!userAdvice.equals("correct")) {
+                userAdvice=input.nextLine();
+                userAdvice=userAdvice.toLowerCase();
                 if (userAdvice.equals("higher")) {
                     min = guess;
                     guess = (min + max) / 2;
-                    System.out.println("Is it: " + guess + "?");
-                    userAdvice = input.nextLine();
-                    userAdvice = userAdvice.toLowerCase();
+                    System.out.println("Is your number " + guess + "?"+" TYPE 'higher', 'lower' or 'correct'");
                 }
                 if (userAdvice.equals("lower"))
                 {
                     max = guess;
                     guess = (min + max) / 2;
-                    System.out.println("Is it: " + guess + "?");
-                    userAdvice = input.nextLine();
-                    userAdvice = userAdvice.toLowerCase();
+                    System.out.println("Is your number " + guess + "?" +" TYPE 'higher', 'lower' or 'correct'");
                 }
+                guessCounter++;
             }
             System.out.println("YEA! I GOT IT! That was fun "+userName+"!");
+            System.out.println("Wow...It took me "+ guessCounter+" tries :(");
         }
     }
 }
